@@ -74,13 +74,21 @@ QUnit.module('Тестируем функцию format', function () {
 	});
 
 
+	QUnit.test('format работает правильно c невалидными данными', function (assert) {
+		const input = 'hello world';
+
+		const expected =
+			'wrong input';
+
+		assert.strictEqual(format(input, 1), expected);
+	});
+
 	QUnit.test('format работает правильно c невалидным кол-вом колонок', function (assert) {
 		const input = [ 0, 1, 2, 10, 100, -100 ];
 
 		const expected =
-			'wrong number of columns';
+			'wrong input';
 
 		assert.strictEqual(format(input, -1), expected);
 	});
-
 });
