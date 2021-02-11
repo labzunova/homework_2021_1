@@ -78,17 +78,18 @@ QUnit.module('Тестируем функцию format', function () {
 		const input = 'hello world';
 
 		const expected =
-			'wrong input';
+			TypeError('wrong input');
 
-		assert.strictEqual(format(input, 1), expected);
+		assert.throws(() => format(input, 1), expected);
 	});
 
 	QUnit.test('format работает правильно c невалидным кол-вом колонок', function (assert) {
 		const input = [ 0, 1, 2, 10, 100, -100 ];
 
 		const expected =
-			'wrong input';
+			TypeError('wrong input');
 
-		assert.strictEqual(format(input, -1), expected);
+		// assert.strictEqual(format(input, -1), expected);
+		assert.throws(() => format(input, -1), expected);
 	});
 });
