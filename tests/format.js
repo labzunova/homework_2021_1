@@ -74,13 +74,42 @@ QUnit.module('Тестируем функцию format', function () {
 	});
 
 
-	QUnit.test('format работает правильно c невалидными данными', function (assert) {
-		const input = 'hello world';
+	QUnit.test('format работает правильно c одинаковыми числами', function (assert) {
+		const input = [ 1, 1, 1, 1, 1, 1 ];
 
+		const expected =
+			'1 1\n'+
+			'1 1\n'+
+			'1 1';
+
+		assert.strictEqual(format(input, 2), expected);
+	});
+
+
+	QUnit.test('format работает правильно c одним числом', function (assert) {
+		const input = [ 1 ];
+
+		const expected =
+			'1';
+
+		assert.strictEqual(format(input, 1), expected);
+		assert.strictEqual(format(input, 2), expected);
+		assert.strictEqual(format(input, 3), expected);
+		assert.strictEqual(format(input, 10), expected);
+
+	});
+
+
+
+	QUnit.test('format работает правильно c невалидными данными', function (assert) {
 		const expected =
 			TypeError('wrong input');
 
-		assert.throws(() => format(input, 1), expected);
+		assert.throws(() => format('hello world', 1), expected);
+		assert.throws(() => format('a10assadd', 1), expected);
+		assert.throws(() => format('02334', 1), expected);
+		assert.throws(() => format('0', 1), expected);
+		assert.throws(() => format(1, 1), expected);
 	});
 
 	QUnit.test('format работает правильно c невалидным кол-вом колонок', function (assert) {
@@ -89,7 +118,9 @@ QUnit.module('Тестируем функцию format', function () {
 		const expected =
 			TypeError('wrong input');
 
-		// assert.strictEqual(format(input, -1), expected);
 		assert.throws(() => format(input, -1), expected);
+		assert.throws(() => format(input, -9), expected);
+		assert.throws(() => format(input, -0), expected);
+		assert.throws(() => format(input, -1.1), expected);
 	});
 });
