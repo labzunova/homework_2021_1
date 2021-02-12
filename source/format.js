@@ -13,11 +13,9 @@ const format = (numbers, cols) => {
 		throw new TypeError('wrong input');
 	}
 
-	numbers = numbers.map(function(number, i) {
-		return numbers[i].toString();
-	});
+	numbers = numbers.map(number => number.toString());
 
-	const colsWidth = Array(cols).fill(0); // определяем ширину каждой колонки
+	const colsWidth = []; // определяем ширину каждой колонки
 	for (let i = 0; i < numbers.length; i++) {
 		const column = i % cols;
 		colsWidth[column] =  Math.max(numbers[i].length, colsWidth[column] || 0);
@@ -27,17 +25,15 @@ const format = (numbers, cols) => {
 		let spacesCount;
 		const column = i % cols; // определяем, из какой колонки число
 		spacesCount = colsWidth[column] - number.length;
-		if (column) {
-			spacesCount++; 
+
+		const indexOfLastColumn = cols - 1;  // формируем нужный отступ
+		const indexOfLastNumber = numbers.length - 1;
+		formated += ' '.repeat(spacesCount) + number + ((column === indexOfLastColumn) ? '\n' : ' ');
+
+		if (i === indexOfLastNumber) {
+			formated = formated.slice(0,-1);
 		}
 
-		const nSpaces = ' '.repeat(spacesCount); // формируем нужный отступ
-
-		formated += nSpaces + number; 
-		if ((column === cols - 1) && (i != numbers.length - 1)) { //если колонка последняя
-			formated += '\n';
-		}
 		return formated;
 	}, '');
-
-};
+}
