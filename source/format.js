@@ -37,3 +37,4 @@ const format = (numbers, cols) => {
 		return formated;
 	}, '');
 }
+
