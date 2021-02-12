@@ -22,9 +22,8 @@ const format = (numbers, cols) => {
 	};
 
 	return numbers.reduce(function(formated, number, i) {
-		let spacesCount;
 		const column = i % cols; // определяем, из какой колонки число
-		spacesCount = colsWidth[column] - number.length;
+		let spacesCount = colsWidth[column] - number.length;
 
 		const indexOfLastColumn = cols - 1;  // формируем нужный отступ
 		const indexOfLastNumber = numbers.length - 1;
