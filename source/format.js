@@ -23,14 +23,14 @@ const format = (numbers, cols) => {
 
 	return numbers.reduce(function(formated, number, i) {
 		const column = i % cols; // определяем, из какой колонки число
-		let spacesCount = colsWidth[column] - number.length;
+		const spacesCount = colsWidth[column] - number.length; 
 
-		const indexOfLastColumn = cols - 1;  // формируем нужный отступ
+		const indexOfLastColumn = cols - 1; // формируем нужный отступ
 		const indexOfLastNumber = numbers.length - 1;
 		formated += ' '.repeat(spacesCount) + number + ((column === indexOfLastColumn) ? '\n' : ' ');
 
 		if (i === indexOfLastNumber) {
-			formated = formated.slice(0,-1);
+			formated = formated.slice(0, -1);
 		}
 
 		return formated;
