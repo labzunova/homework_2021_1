@@ -12,36 +12,40 @@ const format = (numbers, cols) => {
 		/** @exception */
 		throw new TypeError('wrong input');
 	}
-	else {
-		let colsWidth =[];
-		for(let i = 0; i < cols; i++) { // определяем ширину каждой колонки
-			let num = numbers[numbers.length - i - 1];
-			colsWidth[(numbers.length - i - 1)%cols] = (num + '').length;
+
+	// let colsWidth = Array(cols).fill(0);
+	// return colsWidth;
+	// colsWidth = colsWidth.map(function callback(num, i, colsWidth) {
+	// 	const column = i;
+	// 	let max = 0;
+	// 	for(let j = column; j < numbers.length; j + cols) {
+	// 		max = 1;
+	// 	} 
+	// 	return max;
+	// });
+
+	const colsWidth = Array(cols).fill(0); // определяем ширину каждой колонки
+	for(let i = 0; i < numbers.length; i++) {
+		colsWidth[i % cols] =  Math.max((numbers[i] + '').length, colsWidth[i % cols]);
+	};
+
+	return numbers.reduce(function(formated, number, i, numbers) {
+		let n;
+		let column = i % cols; // определяем, из какой колонки число
+		n = colsWidth[column] - (number + '').length;
+		if (column) {
+			n++;
 		}
 
-		let formated = numbers.reduce(function(formated, number, i, numbers) {
-			let n;
-			if ((i + 1) % cols) { // определяем, из какой колонки число
-				n = colsWidth[(i + 1) % cols - 1] - (number + '').length;
-			}
-			else {
-				n = colsWidth[cols - 1] - (number + '').length; 
-			}
-			if (((i + 1) % cols != 1 ) && (cols !=1) ) {
-				n++;
-			}
-			let nSpaces = ''; // формируем нужный отступ
-			for(let j = 0; j < n; j++)
-				nSpaces += ' ';
+		let nSpaces = ' '; // формируем нужный отступ
+		nSpaces = nSpaces.repeat(n);
 
-			formated += nSpaces + number; 
-			if ((!((i + 1) % cols)) && (i != numbers.length - 1)) { //если колонка последняя
-				formated += '\n';
-			}
-			return formated;
-		}, '');
-
+		formated += nSpaces + number; 
+		if ((column === cols - 1) && (i != numbers.length - 1)) { //если колонка последняя
+			formated += '\n';
+		}
 		return formated;
-	}
+	}, '');
+
 };
 

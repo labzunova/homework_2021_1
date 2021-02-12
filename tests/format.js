@@ -99,6 +99,19 @@ QUnit.module('Тестируем функцию format', function () {
 
 	});
 
+	QUnit.test('format работает правильно, когда самые большие числа не последние', function (assert) {
+		const input = [ 0, 10000, 2, 10, 10, -100, 1000, 10000, -100 ];;
+
+		const expected =
+			'   0 10000\n'+
+			'   2    10\n'+
+			'  10  -100\n'+
+			'1000 10000\n'+
+			'-100';;
+
+		assert.strictEqual(format(input, 2), expected);
+
+	});
 
 
 	QUnit.test('format работает правильно c невалидными данными', function (assert) {
