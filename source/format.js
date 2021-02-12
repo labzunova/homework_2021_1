@@ -13,21 +13,25 @@ const format = (numbers, cols) => {
 		throw new TypeError('wrong input');
 	}
 
+	numbers = numbers.map(function(number, i) {
+		return numbers[i].toString();
+	});
+
 	const colsWidth = Array(cols).fill(0); // определяем ширину каждой колонки
-	for(let i = 0; i < numbers.length; i++) {
-		colsWidth[i % cols] =  Math.max((numbers[i] + '').length, colsWidth[i % cols]);
+	for (let i = 0; i < numbers.length; i++) {
+		const column = i % cols;
+		colsWidth[column] =  Math.max(numbers[i].length, colsWidth[column]);
 	};
 
-	return numbers.reduce(function(formated, number, i, numbers) {
-		let n;
-		let column = i % cols; // определяем, из какой колонки число
-		n = colsWidth[column] - (number + '').length;
+	return numbers.reduce(function(formated, number, i) {
+		let spacesCount;
+		const column = i % cols; // определяем, из какой колонки число
+		spacesCount = colsWidth[column] - number.length;
 		if (column) {
-			n++; 
+			spacesCount++; 
 		}
 
-		let nSpaces = ' '; // формируем нужный отступ
-		nSpaces = nSpaces.repeat(n);
+		const nSpaces = ' '.repeat(spacesCount); // формируем нужный отступ
 
 		formated += nSpaces + number; 
 		if ((column === cols - 1) && (i != numbers.length - 1)) { //если колонка последняя
@@ -37,4 +41,3 @@ const format = (numbers, cols) => {
 	}, '');
 
 };
-
