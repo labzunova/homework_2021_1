@@ -20,7 +20,7 @@ const format = (numbers, cols) => {
 	const colsWidth = Array(cols).fill(0); // определяем ширину каждой колонки
 	for (let i = 0; i < numbers.length; i++) {
 		const column = i % cols;
-		colsWidth[column] =  Math.max(numbers[i].length, colsWidth[column]);
+		colsWidth[column] =  Math.max(numbers[i].length, colsWidth[column] || 0);
 	};
 
 	return numbers.reduce(function(formated, number, i) {
